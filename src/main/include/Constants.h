@@ -17,5 +17,17 @@
 namespace OperatorConstants {
 
 inline constexpr int kDriverControllerPort = 0;
+constexpr int frontleftDriveMotorID = 1;
+constexpr int frontleftRotMotorID = 2;
+constexpr int frontleftRotEncoderID = 3;
+constexpr int frontrightDriveMotorID = 4;
+constexpr int frontrightRotMotorID = 5;
+constexpr int frontrightRotEncoderID = 6;
+constexpr int backleftDriveMotorID = 7;
+constexpr int backleftRotMotorID = 8;
+constexpr int backleftRotEncoderID = 9;
+constexpr int backrightDriveMotorID = 10;
+constexpr int backrightRotMotorID = 11;
+constexpr int backrightRotEncoderID = 12;
 
 }  // namespace OperatorConstants
