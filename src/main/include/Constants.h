@@ -29,5 +29,8 @@ constexpr int backleftRotEncoderID = 9;
 constexpr int backrightDriveMotorID = 10;
 constexpr int backrightRotMotorID = 11;
 constexpr int backrightRotEncoderID = 12;
+constexpr int shooterMotorID = 13;
+constexpr int upperMotorID = 14;
+constexpr int lowerMotorID = 15;
 
 }  // namespace OperatorConstants

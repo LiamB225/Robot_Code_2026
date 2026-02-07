@@ -33,6 +33,8 @@ void RobotContainer::ConfigureBindings() {
     [this]() { return m_driverController.GetLeftY(); },
     [this]() { return m_driverController.GetRightY(); }
   ));
+
+  m_driverController.Y().WhileTrue(m_shooter.get_shoot_command());
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
