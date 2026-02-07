@@ -37,10 +37,10 @@ class Drive : public frc2::SubsystemBase {
    */
   void Periodic() override;
 
-  frc2::CommandPtr drivecommand(
-    std::function<double(void)> drivepower,
-    std::function<double(void)> strafepower,
-    std::function<double(void)> rotpower
+  frc2::CommandPtr get_drive_command(
+    std::function<double(void)> get_drive_power,
+    std::function<double(void)> get_strafe_power,
+    std::function<double(void)> get_rot_power
   );
   
   void SwerveDrive(
