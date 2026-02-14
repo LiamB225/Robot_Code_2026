@@ -87,7 +87,7 @@ class Drive : public frc2::SubsystemBase {
   //Front Left Module
   rev::spark::SparkMax flDriveMotor{OperatorConstants::flDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
   rev::spark::SparkMax flRotMotor{OperatorConstants::flRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  ctre::phoenix6::hardware::CANcoder flRotEncoder{OperatorConstants::flRotEncoderID, "rio"};
+  ctre::phoenix6::hardware::CANcoder flRotEncoder{OperatorConstants::flRotEncoderID, rioCanbus};
   frc::PIDController flDrivePID{0.0, 0.0, 0.0};
   frc::ProfiledPIDController<units::radians> flRotPID{0.0, 0.0, 0.0, {kRotMaxSpeed, kRotMaxAccel}};
   frc::SimpleMotorFeedforward<units::meters> flDriveFF{0_V, 0_V / 1_mps, 0_V / 1_mps_sq};
@@ -96,7 +96,7 @@ class Drive : public frc2::SubsystemBase {
   //Front Right Module
   rev::spark::SparkMax frDriveMotor{OperatorConstants::frDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
   rev::spark::SparkMax frRotMotor{OperatorConstants::frRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  ctre::phoenix6::hardware::CANcoder frRotEncoder{OperatorConstants::frRotEncoderID, "rio"};
+  ctre::phoenix6::hardware::CANcoder frRotEncoder{OperatorConstants::frRotEncoderID, rioCanbus};
   frc::PIDController frDrivePID{0.0, 0.0, 0.0};
   frc::ProfiledPIDController<units::radians> frRotPID{0.0, 0.0, 0.0, {kRotMaxSpeed, kRotMaxAccel}};
   frc::SimpleMotorFeedforward<units::meters> frDriveFF{0_V, 0_V / 1_mps, 0_V / 1_mps_sq};
@@ -105,7 +105,7 @@ class Drive : public frc2::SubsystemBase {
   //Back Left Module
   rev::spark::SparkMax blDriveMotor{OperatorConstants::blDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
   rev::spark::SparkMax blRotMotor{OperatorConstants::blRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  ctre::phoenix6::hardware::CANcoder blRotEncoder{OperatorConstants::blRotEncoderID, "rio"};
+  ctre::phoenix6::hardware::CANcoder blRotEncoder{OperatorConstants::blRotEncoderID, rioCanbus};
   frc::PIDController blDrivePID{0.0, 0.0, 0.0};
   frc::ProfiledPIDController<units::radians> blRotPID{0.0, 0.0, 0.0, {kRotMaxSpeed, kRotMaxAccel}};
   frc::SimpleMotorFeedforward<units::meters> blDriveFF{0_V, 0_V / 1_mps, 0_V / 1_mps_sq};
@@ -114,7 +114,7 @@ class Drive : public frc2::SubsystemBase {
   //Back Right Module
   rev::spark::SparkMax brDriveMotor{OperatorConstants::brDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
   rev::spark::SparkMax brRotMotor{OperatorConstants::brRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  ctre::phoenix6::hardware::CANcoder brRotEncoder{OperatorConstants::brRotEncoderID, "rio"};
+  ctre::phoenix6::hardware::CANcoder brRotEncoder{OperatorConstants::brRotEncoderID, rioCanbus};
   frc::PIDController brDrivePID{0.0, 0.0, 0.0};
   frc::ProfiledPIDController<units::radians> brRotPID{0.0, 0.0, 0.0, {kRotMaxSpeed, kRotMaxAccel}};
   frc::SimpleMotorFeedforward<units::meters> brDriveFF{0_V, 0_V / 1_mps, 0_V / 1_mps_sq};

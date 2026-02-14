@@ -16,6 +16,7 @@ class Intake : public frc2::SubsystemBase {
   Intake();
 
   frc2::CommandPtr get_intake_command();
+  frc2::CommandPtr get_outake_command();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
