@@ -10,14 +10,14 @@ Drive::Drive() = default;
 void Drive::Periodic() {
     frc::Rotation2d angle{gyro.GetAngle()};
     m_poseEstimator.Update(angle, {
-    frc::SwerveModulePosition{(units::meter_t)(frontleftDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
-      (units::radian_t)(frontleftRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
-    frc::SwerveModulePosition{(units::meter_t)(frontrightDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
-      (units::radian_t)(frontrightRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
-    frc::SwerveModulePosition{(units::meter_t)(backleftDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
-      (units::radian_t)(backleftRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
-    frc::SwerveModulePosition{(units::meter_t)(backrightDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
-      (units::radian_t)(backrightRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)}
+    frc::SwerveModulePosition{(units::meter_t)(flDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
+      (units::radian_t)(flRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
+    frc::SwerveModulePosition{(units::meter_t)(frDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
+      (units::radian_t)(frRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
+    frc::SwerveModulePosition{(units::meter_t)(blDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
+      (units::radian_t)(blRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
+    frc::SwerveModulePosition{(units::meter_t)(brDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
+      (units::radian_t)(brRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)}
     });
 }
 
@@ -63,10 +63,10 @@ void Drive::SwerveDrive(
     m_kinematics.DesaturateWheelSpeeds(&states, kModuleMaxSpeed);
     auto [fl, fr, bl, br] = states;
     
-    frc::Rotation2d flEncoderRotation{(units::radian_t)(frontleftRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)};
-    frc::Rotation2d frEncoderRotation{(units::radian_t)(frontrightRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)};
-    frc::Rotation2d blEncoderRotation{(units::radian_t)(backleftRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)};
-    frc::Rotation2d brEncoderRotation{(units::radian_t)(backrightRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)};
+    frc::Rotation2d flEncoderRotation{(units::radian_t)(flRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)};
+    frc::Rotation2d frEncoderRotation{(units::radian_t)(frRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)};
+    frc::Rotation2d blEncoderRotation{(units::radian_t)(blRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)};
+    frc::Rotation2d brEncoderRotation{(units::radian_t)(brRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)};
 
     fl.Optimize(flEncoderRotation);
     fr.Optimize(frEncoderRotation);
@@ -80,43 +80,43 @@ void Drive::SwerveDrive(
 
     //Drive Control
     units::volt_t flDrivePIDVoltage = (units::volt_t)(flDrivePID.Calculate(
-        frontleftDriveMotor.GetEncoder().GetVelocity() * M_PI * 0.1016 / (8.14 * 60), fl.speed.value()));
+        flDriveMotor.GetEncoder().GetVelocity() * M_PI * 0.1016 / (8.14 * 60), fl.speed.value()));
     units::volt_t frDrivePIDVoltage = (units::volt_t)(frDrivePID.Calculate(
-        frontrightDriveMotor.GetEncoder().GetVelocity() * M_PI * 0.1016 / (8.14 * 60), fr.speed.value()));
+        frDriveMotor.GetEncoder().GetVelocity() * M_PI * 0.1016 / (8.14 * 60), fr.speed.value()));
     units::volt_t blDrivePIDVoltage = (units::volt_t)(blDrivePID.Calculate(
-        backleftDriveMotor.GetEncoder().GetVelocity() * M_PI * 0.1016 / (8.14 * 60), bl.speed.value()));
+        blDriveMotor.GetEncoder().GetVelocity() * M_PI * 0.1016 / (8.14 * 60), bl.speed.value()));
     units::volt_t brDrivePIDVoltage = (units::volt_t)(brDrivePID.Calculate(
-        backrightDriveMotor.GetEncoder().GetVelocity() * M_PI * 0.1016 / (8.14 * 60), br.speed.value()));
+        brDriveMotor.GetEncoder().GetVelocity() * M_PI * 0.1016 / (8.14 * 60), br.speed.value()));
 
     units::volt_t flDriveFFVoltage = flDriveFF.Calculate(fl.speed);
     units::volt_t frDriveFFVoltage = frDriveFF.Calculate(fr.speed);
     units::volt_t blDriveFFVoltage = blDriveFF.Calculate(bl.speed);
     units::volt_t brDriveFFVoltage = brDriveFF.Calculate(br.speed);
 
-    frontleftDriveMotor.SetVoltage(flDrivePIDVoltage + flDriveFFVoltage);
-    frontrightDriveMotor.SetVoltage(frDrivePIDVoltage + frDriveFFVoltage);
-    backleftDriveMotor.SetVoltage(blDrivePIDVoltage + blDriveFFVoltage);
-    backrightDriveMotor.SetVoltage(brDrivePIDVoltage + brDriveFFVoltage);
+    flDriveMotor.SetVoltage(flDrivePIDVoltage + flDriveFFVoltage);
+    frDriveMotor.SetVoltage(frDrivePIDVoltage + frDriveFFVoltage);
+    blDriveMotor.SetVoltage(blDrivePIDVoltage + blDriveFFVoltage);
+    brDriveMotor.SetVoltage(brDrivePIDVoltage + brDriveFFVoltage);
 
     //Rotation Control
     units::volt_t flRotPIDVoltage = (units::volt_t)(flRotPID.Calculate(
-        (units::radian_t)(frontleftRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2), fl.angle.Radians()));
+        (units::radian_t)(flRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2), fl.angle.Radians()));
     units::volt_t frRotPIDVoltage = (units::volt_t)(frRotPID.Calculate(
-        (units::radian_t)(frontrightRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2), fr.angle.Radians()));
+        (units::radian_t)(frRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2), fr.angle.Radians()));
     units::volt_t blRotPIDVoltage = (units::volt_t)(blRotPID.Calculate(
-        (units::radian_t)(backleftRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2), bl.angle.Radians()));
+        (units::radian_t)(blRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2), bl.angle.Radians()));
     units::volt_t brRotPIDVoltage = (units::volt_t)(brRotPID.Calculate(
-        (units::radian_t)(backrightRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2), br.angle.Radians()));
+        (units::radian_t)(brRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2), br.angle.Radians()));
 
     units::volt_t flRotFFVoltage = flRotFF.Calculate(flRotPID.GetSetpoint().velocity);
     units::volt_t frRotFFVoltage = frRotFF.Calculate(frRotPID.GetSetpoint().velocity);
     units::volt_t blRotFFVoltage = blRotFF.Calculate(blRotPID.GetSetpoint().velocity);
     units::volt_t brRotFFVoltage = brRotFF.Calculate(brRotPID.GetSetpoint().velocity);
 
-    frontleftRotMotor.SetVoltage(flRotPIDVoltage + flRotFFVoltage);
-    frontrightRotMotor.SetVoltage(frRotPIDVoltage + frRotFFVoltage);
-    backleftRotMotor.SetVoltage(blRotPIDVoltage + blRotFFVoltage);
-    backrightRotMotor.SetVoltage(brRotPIDVoltage + brRotFFVoltage);
+    flRotMotor.SetVoltage(flRotPIDVoltage + flRotFFVoltage);
+    frRotMotor.SetVoltage(frRotPIDVoltage + frRotFFVoltage);
+    blRotMotor.SetVoltage(blRotPIDVoltage + blRotFFVoltage);
+    brRotMotor.SetVoltage(brRotPIDVoltage + brRotFFVoltage);
 
     return;
 }
