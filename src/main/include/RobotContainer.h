@@ -10,7 +10,6 @@
 #include "Constants.h"
 #include "subsystems/Drive.h"
 #include "subsystems/Shooter.h"
-#include "subsystems/ExampleSubsystem.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since

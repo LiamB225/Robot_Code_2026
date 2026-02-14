@@ -17,18 +17,18 @@
 namespace OperatorConstants {
 
 inline constexpr int kDriverControllerPort = 0;
-constexpr int frontleftDriveMotorID = 1;
-constexpr int frontleftRotMotorID = 2;
-constexpr int frontleftRotEncoderID = 3;
-constexpr int frontrightDriveMotorID = 4;
-constexpr int frontrightRotMotorID = 5;
-constexpr int frontrightRotEncoderID = 6;
-constexpr int backleftDriveMotorID = 7;
-constexpr int backleftRotMotorID = 8;
-constexpr int backleftRotEncoderID = 9;
-constexpr int backrightDriveMotorID = 10;
-constexpr int backrightRotMotorID = 11;
-constexpr int backrightRotEncoderID = 12;
+constexpr int flDriveMotorID = 1;
+constexpr int flRotMotorID = 2;
+constexpr int flRotEncoderID = 3;
+constexpr int frDriveMotorID = 4;
+constexpr int frRotMotorID = 5;
+constexpr int frRotEncoderID = 6;
+constexpr int blDriveMotorID = 7;
+constexpr int blRotMotorID = 8;
+constexpr int blRotEncoderID = 9;
+constexpr int brDriveMotorID = 10;
+constexpr int brRotMotorID = 11;
+constexpr int brRotEncoderID = 12;
 constexpr int shooterMotorID = 13;
 constexpr int upperMotorID = 14;
 constexpr int lowerMotorID = 15;

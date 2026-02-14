@@ -85,36 +85,36 @@ class Drive : public frc2::SubsystemBase {
  
 
   //Front Left Module
-  rev::spark::SparkMax frontleftDriveMotor{OperatorConstants::frontleftDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  rev::spark::SparkMax frontleftRotMotor{OperatorConstants::frontleftRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  ctre::phoenix6::hardware::CANcoder frontleftRotEncoder{OperatorConstants::frontleftRotEncoderID, "rio"};
+  rev::spark::SparkMax flDriveMotor{OperatorConstants::flDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
+  rev::spark::SparkMax flRotMotor{OperatorConstants::flRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
+  ctre::phoenix6::hardware::CANcoder flRotEncoder{OperatorConstants::flRotEncoderID, "rio"};
   frc::PIDController flDrivePID{0.0, 0.0, 0.0};
   frc::ProfiledPIDController<units::radians> flRotPID{0.0, 0.0, 0.0, {kRotMaxSpeed, kRotMaxAccel}};
   frc::SimpleMotorFeedforward<units::meters> flDriveFF{0_V, 0_V / 1_mps, 0_V / 1_mps_sq};
   frc::SimpleMotorFeedforward<units::radians> flRotFF{0_V, 0_V / 1_rad_per_s};
 
   //Front Right Module
-  rev::spark::SparkMax frontrightDriveMotor{OperatorConstants::frontrightDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  rev::spark::SparkMax frontrightRotMotor{OperatorConstants::frontrightRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  ctre::phoenix6::hardware::CANcoder frontrightRotEncoder{OperatorConstants::frontrightRotEncoderID, "rio"};
+  rev::spark::SparkMax frDriveMotor{OperatorConstants::frDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
+  rev::spark::SparkMax frRotMotor{OperatorConstants::frRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
+  ctre::phoenix6::hardware::CANcoder frRotEncoder{OperatorConstants::frRotEncoderID, "rio"};
   frc::PIDController frDrivePID{0.0, 0.0, 0.0};
   frc::ProfiledPIDController<units::radians> frRotPID{0.0, 0.0, 0.0, {kRotMaxSpeed, kRotMaxAccel}};
   frc::SimpleMotorFeedforward<units::meters> frDriveFF{0_V, 0_V / 1_mps, 0_V / 1_mps_sq};
   frc::SimpleMotorFeedforward<units::radians> frRotFF{0_V, 0_V / 1_rad_per_s};
 
   //Back Left Module
-  rev::spark::SparkMax backleftDriveMotor{OperatorConstants::backleftDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  rev::spark::SparkMax backleftRotMotor{OperatorConstants::backleftRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  ctre::phoenix6::hardware::CANcoder backleftRotEncoder{OperatorConstants::backleftRotEncoderID, "rio"};
+  rev::spark::SparkMax blDriveMotor{OperatorConstants::blDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
+  rev::spark::SparkMax blRotMotor{OperatorConstants::blRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
+  ctre::phoenix6::hardware::CANcoder blRotEncoder{OperatorConstants::blRotEncoderID, "rio"};
   frc::PIDController blDrivePID{0.0, 0.0, 0.0};
   frc::ProfiledPIDController<units::radians> blRotPID{0.0, 0.0, 0.0, {kRotMaxSpeed, kRotMaxAccel}};
   frc::SimpleMotorFeedforward<units::meters> blDriveFF{0_V, 0_V / 1_mps, 0_V / 1_mps_sq};
   frc::SimpleMotorFeedforward<units::radians> blRotFF{0_V, 0_V / 1_rad_per_s};
 
   //Back Right Module
-  rev::spark::SparkMax backrightDriveMotor{OperatorConstants::backrightDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  rev::spark::SparkMax backrightRotMotor{OperatorConstants::backrightRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
-  ctre::phoenix6::hardware::CANcoder backrightRotEncoder{OperatorConstants::backrightRotEncoderID, "rio"};
+  rev::spark::SparkMax brDriveMotor{OperatorConstants::brDriveMotorID, rev::spark::SparkMax::MotorType::kBrushless};
+  rev::spark::SparkMax brRotMotor{OperatorConstants::brRotMotorID, rev::spark::SparkMax::MotorType::kBrushless};
+  ctre::phoenix6::hardware::CANcoder brRotEncoder{OperatorConstants::brRotEncoderID, "rio"};
   frc::PIDController brDrivePID{0.0, 0.0, 0.0};
   frc::ProfiledPIDController<units::radians> brRotPID{0.0, 0.0, 0.0, {kRotMaxSpeed, kRotMaxAccel}};
   frc::SimpleMotorFeedforward<units::meters> brDriveFF{0_V, 0_V / 1_mps, 0_V / 1_mps_sq};
@@ -122,13 +122,13 @@ class Drive : public frc2::SubsystemBase {
  
   //Position Estimator
   frc::SwerveDrivePoseEstimator<4> m_poseEstimator{m_kinematics, frc::Rotation2d{}, {
-    frc::SwerveModulePosition{(units::meter_t)(frontleftDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
-      (units::radian_t)(frontleftRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
-    frc::SwerveModulePosition{(units::meter_t)(frontrightDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
-      (units::radian_t)(frontrightRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
-    frc::SwerveModulePosition{(units::meter_t)(backleftDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
-      (units::radian_t)(backleftRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
-    frc::SwerveModulePosition{(units::meter_t)(backrightDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
-      (units::radian_t)(backrightRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)}
+    frc::SwerveModulePosition{(units::meter_t)(flDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
+      (units::radian_t)(flRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
+    frc::SwerveModulePosition{(units::meter_t)(frDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
+      (units::radian_t)(frRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
+    frc::SwerveModulePosition{(units::meter_t)(blDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
+      (units::radian_t)(blRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
+    frc::SwerveModulePosition{(units::meter_t)(blDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
+      (units::radian_t)(brRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)}
   }, frc::Pose2d{}};
 };
