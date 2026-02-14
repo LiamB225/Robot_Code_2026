@@ -5,6 +5,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc2/command/CommandPtr.h>
 
 #include <rev/SparkMax.h>
 #include <ctre/phoenix6/CANcoder.hpp>
