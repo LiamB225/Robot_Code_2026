@@ -4,11 +4,17 @@
 
 #include "subsystems/Drive.h"
 
-Drive::Drive() = default;
+Drive::Drive() {
+    flRotPID.EnableContinuousInput((units::radian_t)(-M_PI), (units::radian_t)(M_PI));
+    frRotPID.EnableContinuousInput((units::radian_t)(-M_PI), (units::radian_t)(M_PI));
+    blRotPID.EnableContinuousInput((units::radian_t)(-M_PI), (units::radian_t)(M_PI));
+    brRotPID.EnableContinuousInput((units::radian_t)(-M_PI), (units::radian_t)(M_PI));
+    gyro.Calibrate();
+}
 
 // This method will be called once per scheduler run
 void Drive::Periodic() {
-    frc::Rotation2d angle{gyro.GetAngle()};
+    frc::Rotation2d angle{-gyro.GetAngle(gyro.GetPitchAxis())};
     m_poseEstimator.Update(angle, {
     frc::SwerveModulePosition{(units::meter_t)(flDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
       (units::radian_t)(flRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)},
@@ -33,11 +39,11 @@ frc2::CommandPtr Drive::get_drive_command(
             units::radians_per_second_t rot;
 
             // Fill these variables with user input.
-            drive = XRateLimiter.Calculate(frc::ApplyDeadband(get_drive_power(), 0.05)) * kRobotMaxSpeed;
-            strafe = YRateLimiter.Calculate(frc::ApplyDeadband(get_strafe_power(), 0.05)) * kRobotMaxSpeed;
-            rot = RotRateLimiter.Calculate(frc::ApplyDeadband(get_rot_power(), 0.05)) * kRobotRotMaxSpeed;
+            drive = XRateLimiter.Calculate(frc::ApplyDeadband(get_drive_power(), 0.07)) * kRobotMaxSpeed;
+            strafe = YRateLimiter.Calculate(frc::ApplyDeadband(get_strafe_power(), 0.07)) * kRobotMaxSpeed;
+            rot = RotRateLimiter.Calculate(frc::ApplyDeadband(get_rot_power(), 0.07)) * kRobotRotMaxSpeed;
             
-            SwerveDrive(drive, strafe, rot, false);
+            SwerveDrive(drive, strafe, rot, true);
         }
     );
 }
@@ -57,11 +63,17 @@ void Drive::SwerveDrive(
     }
     frc::Rotation2d angle{};
     angle = m_poseEstimator.GetEstimatedPosition().Rotation();
+    frc::SmartDashboard::GetNumber("angle", angle.Radians().value());
     auto states = m_kinematics.ToSwerveModuleStates(frc::ChassisSpeeds::Discretize(
         fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(speeds, angle) : speeds,
         0.02_s));
     m_kinematics.DesaturateWheelSpeeds(&states, kModuleMaxSpeed);
     auto [fl, fr, bl, br] = states;
+
+    // frc::SmartDashboard::PutNumber("fl", fl.angle.Radians().value());
+    // frc::SmartDashboard::PutNumber("fr", fr.angle.Radians().value());
+    // frc::SmartDashboard::PutNumber("bl", bl.angle.Radians().value());
+    // frc::SmartDashboard::PutNumber("br", br.angle.Radians().value());
     
     frc::Rotation2d flEncoderRotation{(units::radian_t)(flRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)};
     frc::Rotation2d frEncoderRotation{(units::radian_t)(frRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)};

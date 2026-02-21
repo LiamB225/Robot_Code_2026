@@ -17,9 +17,9 @@ void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here
 
   m_drive.SetDefaultCommand(m_drive.get_drive_command(
-    [this]() { return m_driverController.GetLeftX(); },
-    [this]() { return m_driverController.GetLeftY(); },
-    [this]() { return m_driverController.GetRightY(); }
+    [this]() { return -m_driverController.GetLeftY(); },
+    [this]() { return -m_driverController.GetLeftX(); },
+    [this]() { return -m_driverController.GetRightX(); }
   ));
 
   m_driverController.Y().WhileTrue(m_shooter.get_shoot_command());
