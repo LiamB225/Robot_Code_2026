@@ -9,6 +9,9 @@
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
 
+  autoChooser = pathplanner::AutoBuilder::buildAutoChooser();
+  frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
+
   // Configure the button bindings
   ConfigureBindings();
 }
@@ -27,9 +30,6 @@ void RobotContainer::ConfigureBindings() {
   m_driverController.LeftTrigger().WhileTrue(m_intake.get_outake_command());
 }
 
-frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
-  // An example command will be run in autonomous
-
-  // PLACEHOLDER COMMAND FOR AUTO
-  return m_drive.RunOnce([this](){});
+frc2::Command* RobotContainer::GetAutonomousCommand() {
+  return autoChooser.GetSelected();
 }

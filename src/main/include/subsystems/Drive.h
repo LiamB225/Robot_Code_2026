@@ -28,6 +28,9 @@
 
 #include <rev/SparkMax.h>
 #include <ctre/phoenix6/CANcoder.hpp>
+#include <pathplanner/lib/auto/AutoBuilder.h>
+#include <pathplanner/lib/config/RobotConfig.h>
+#include <pathplanner/lib/controllers/PPHolonomicDriveController.h>
 
 #include "Constants.h"
 
@@ -53,18 +56,21 @@ class Drive : public frc2::SubsystemBase {
     bool fieldRelative
   );
 
+  void ResetPosition(frc::Pose2d pose);
+  frc::ChassisSpeeds GetRobotRelativeChassisSpeeds();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
   //Kinematics Constants
-  units::meters_per_second_t kModuleMaxSpeed = 1_mps;
-  units::radians_per_second_t kRotMaxSpeed = 3.14_rad_per_s;
+  units::meters_per_second_t kModuleMaxSpeed = 2_mps;
+  units::radians_per_second_t kRotMaxSpeed = 6.28_rad_per_s;
   units::radians_per_second_squared_t kRotMaxAccel = 100_rad_per_s_sq;
 
   //Robot Constants
-  units::meters_per_second_t kRobotMaxSpeed = 1_mps;
-  units::radians_per_second_t kRobotRotMaxSpeed = 3.14_rad_per_s;
+  units::meters_per_second_t kRobotMaxSpeed = 2_mps;
+  units::radians_per_second_t kRobotRotMaxSpeed = 6.28_rad_per_s;
   
   //Swerve Drive Kinematics
   units::meter_t kRobotLength = 0.53975_m;
