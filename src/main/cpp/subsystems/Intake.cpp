@@ -12,7 +12,7 @@ void Intake::Periodic() {}
 frc2::CommandPtr Intake::get_intake_command() {
     return this->StartEnd(
         [this]() {
-            intakeMotor.Set(0.5);
+            intakeMotor.Set(1.0);
         },
         [this]() {
             intakeMotor.Set(0.0);

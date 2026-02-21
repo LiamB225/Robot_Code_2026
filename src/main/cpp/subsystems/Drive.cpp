@@ -55,12 +55,13 @@ void Drive::SwerveDrive(
     bool fieldRelative
 ) {
     frc::ChassisSpeeds speeds{};
-    if(frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed && fieldRelative) {
-        speeds = {-xspeed, -yspeed, rotspeed};
-    }
-    else {
-        speeds = {xspeed, yspeed, rotspeed};
-    }
+    // if(frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed && fieldRelative) {
+    //     speeds = {-xspeed, -yspeed, rotspeed};
+    // }
+    // else {
+    //     speeds = {xspeed, yspeed, rotspeed};
+    // }
+    speeds = {xspeed, yspeed, rotspeed};
     frc::Rotation2d angle{};
     angle = m_poseEstimator.GetEstimatedPosition().Rotation();
     frc::SmartDashboard::GetNumber("angle", angle.Radians().value());
