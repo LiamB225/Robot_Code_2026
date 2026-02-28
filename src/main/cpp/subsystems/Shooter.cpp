@@ -19,7 +19,7 @@ frc2::CommandPtr Shooter::get_shoot_command() {
             upperMotor.Set(0.50);
             lowerMotor.Set(0.164);
         }),
-        frc2::cmd::Wait(1000000.0_s)
+        frc2::cmd::Idle()
     ).FinallyDo(
         [this]() {
             upperMotor.Set(0.0);

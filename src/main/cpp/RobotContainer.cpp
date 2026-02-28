@@ -8,6 +8,7 @@
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
+  pathplanner::NamedCommands::registerCommand("shootcmd", m_shooter.get_shoot_command());
 
   autoChooser = pathplanner::AutoBuilder::buildAutoChooser();
   frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
@@ -26,7 +27,7 @@ void RobotContainer::ConfigureBindings() {
   ));
 
   m_driverController.Y().WhileTrue(m_shooter.get_shoot_command());
-  m_driverController.RightTrigger().WhileTrue(m_intake.get_intake_command());
+  m_driverController.RightTrigger().ToggleOnTrue(m_intake.get_intake_command());
   m_driverController.LeftTrigger().WhileTrue(m_intake.get_outake_command());
 }
 

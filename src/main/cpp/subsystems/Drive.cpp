@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/Drive.h"
+#include "LimelightHelpers.h"
 
 Drive::Drive() {
     flRotPID.EnableContinuousInput((units::radian_t)(-M_PI), (units::radian_t)(M_PI));
@@ -29,7 +30,10 @@ Drive::Drive() {
         []() { return false; },
         this
     );
+
+    // TODO: Initialize the limelight to read from the external gyro.
 }
+    
 
 // This method will be called once per scheduler run
 void Drive::Periodic() {
@@ -44,6 +48,21 @@ void Drive::Periodic() {
     frc::SwerveModulePosition{(units::meter_t)(brDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
       (units::radian_t)(brRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)}
     });
+
+    auto est_position = m_poseEstimator.GetEstimatedPosition().Rotation().Degrees().value();
+    if(frc::DriverStation::IsEnabled()) {
+        LimelightHelpers::SetIMUAssistAlpha("limelight", 0.001);
+        LimelightHelpers::SetIMUMode("limelight", 4);
+        LimelightHelpers::SetRobotOrientation("limelight-primary", est_position, 0.0, 0.0, 0.0, 0.0, 0.0);
+    } else {
+        LimelightHelpers::SetIMUMode("limelight", 1);
+        LimelightHelpers::SetRobotOrientation("limelight-primary", est_position, 0.0, 0.0, 0.0, 0.0, 0.0);
+    }
+
+    if (LimelightHelpers::getTV("limelight")) {
+        auto limelight_est_pos = LimelightHelpers::getBotPose2d_wpiBlue("limelight");
+        m_poseEstimator.AddVisionMeasurement(limelight_est_pos, frc::Timer::GetTimestamp());
+    }
 }
 
 frc2::CommandPtr Drive::get_drive_command(

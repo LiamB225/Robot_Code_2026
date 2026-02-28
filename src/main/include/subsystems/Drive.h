@@ -65,12 +65,12 @@ class Drive : public frc2::SubsystemBase {
 
   //Kinematics Constants
   units::meters_per_second_t kModuleMaxSpeed = 2_mps;
-  units::radians_per_second_t kRotMaxSpeed = 6.28_rad_per_s;
+  units::radians_per_second_t kRotMaxSpeed = 4.71_rad_per_s;
   units::radians_per_second_squared_t kRotMaxAccel = 100_rad_per_s_sq;
 
   //Robot Constants
   units::meters_per_second_t kRobotMaxSpeed = 2_mps;
-  units::radians_per_second_t kRobotRotMaxSpeed = 6.28_rad_per_s;
+  units::radians_per_second_t kRobotRotMaxSpeed = 4.71_rad_per_s;
   
   //Swerve Drive Kinematics
   units::meter_t kRobotLength = 0.53975_m;
