@@ -51,10 +51,10 @@ void Drive::Periodic() {
 
     double est_position_yaw = gyro.GetAngle(gyro.GetPitchAxis()).value();
     double est_position_yaw_rate = gyro.GetRate(gyro.GetPitchAxis()).value();
-    double est_position_pitch = -gyro.GetAngle(gyro.GetRollAxis()).value();
-    double est_position_pitch_rate = -gyro.GetRate(gyro.GetRollAxis()).value();
-    double est_position_roll = -gyro.GetAngle(gyro.GetYawAxis()).value();
-    double est_position_roll_rate = -gyro.GetRate(gyro.GetYawAxis()).value();
+    double est_position_pitch = gyro.GetAngle(gyro.GetRollAxis()).value();
+    double est_position_pitch_rate = gyro.GetRate(gyro.GetRollAxis()).value();
+    double est_position_roll = gyro.GetAngle(gyro.GetYawAxis()).value();
+    double est_position_roll_rate = gyro.GetRate(gyro.GetYawAxis()).value();
 
     if(frc::DriverStation::IsEnabled()) {
         LimelightHelpers::SetIMUAssistAlpha("limelight", 0.001);
