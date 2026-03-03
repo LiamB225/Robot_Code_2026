@@ -15,6 +15,7 @@
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc/DriverStation.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/smartdashboard/Field2d.h>
 #include <cmath>
 #include <math.h>
 
@@ -138,4 +139,8 @@ class Drive : public frc2::SubsystemBase {
     frc::SwerveModulePosition{(units::meter_t)(blDriveMotor.GetEncoder().GetPosition() * M_PI * 0.1016 / 8.14),
       (units::radian_t)(brRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)}
   }, frc::Pose2d{}};
+
+  //Field Variable
+  frc::Field2d m_field;
+
 };

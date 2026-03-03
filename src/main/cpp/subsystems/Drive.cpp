@@ -31,7 +31,7 @@ Drive::Drive() {
         this
     );
 
-    // TODO: Initialize the limelight to read from the external gyro.
+    frc::SmartDashboard::PutData("field", &m_field);
 }
     
 
@@ -49,20 +49,46 @@ void Drive::Periodic() {
       (units::radian_t)(brRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)}
     });
 
-    auto est_position = m_poseEstimator.GetEstimatedPosition().Rotation().Degrees().value();
+    double est_position_yaw = gyro.GetAngle(gyro.GetPitchAxis()).value();
+    double est_position_yaw_rate = gyro.GetRate(gyro.GetPitchAxis()).value();
+    double est_position_pitch = -gyro.GetAngle(gyro.GetRollAxis()).value();
+    double est_position_pitch_rate = -gyro.GetRate(gyro.GetRollAxis()).value();
+    double est_position_roll = -gyro.GetAngle(gyro.GetYawAxis()).value();
+    double est_position_roll_rate = -gyro.GetRate(gyro.GetYawAxis()).value();
+
     if(frc::DriverStation::IsEnabled()) {
         LimelightHelpers::SetIMUAssistAlpha("limelight", 0.001);
         LimelightHelpers::SetIMUMode("limelight", 4);
-        LimelightHelpers::SetRobotOrientation("limelight-primary", est_position, 0.0, 0.0, 0.0, 0.0, 0.0);
+        LimelightHelpers::SetRobotOrientation("limelight", 
+            est_position_yaw, 
+            est_position_yaw_rate, 
+            est_position_pitch, 
+            est_position_pitch_rate, 
+            est_position_roll,
+            est_position_roll_rate);
     } else {
         LimelightHelpers::SetIMUMode("limelight", 1);
-        LimelightHelpers::SetRobotOrientation("limelight-primary", est_position, 0.0, 0.0, 0.0, 0.0, 0.0);
+        LimelightHelpers::SetRobotOrientation("limelight", 
+            est_position_yaw, 
+            est_position_yaw_rate, 
+            est_position_pitch, 
+            est_position_pitch_rate, 
+            est_position_roll,
+            est_position_roll_rate);
     }
 
     if (LimelightHelpers::getTV("limelight")) {
         auto limelight_est_pos = LimelightHelpers::getBotPose2d_wpiBlue("limelight");
         m_poseEstimator.AddVisionMeasurement(limelight_est_pos, frc::Timer::GetTimestamp());
+        frc::SmartDashboard::PutBoolean("hastarget", true);
+    } else {
+        frc::SmartDashboard::PutBoolean("hastarget", false);
     }
+
+    m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
+    frc::SmartDashboard::PutNumber("X", m_poseEstimator.GetEstimatedPosition().X().value());
+    frc::SmartDashboard::PutNumber("Y", m_poseEstimator.GetEstimatedPosition().Y().value());
+    frc::SmartDashboard::PutNumber("ROT", m_poseEstimator.GetEstimatedPosition().Rotation().Radians().value());
 }
 
 frc2::CommandPtr Drive::get_drive_command(
