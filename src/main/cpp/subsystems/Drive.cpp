@@ -78,8 +78,8 @@ void Drive::Periodic() {
     }
 
     if (LimelightHelpers::getTV("limelight")) {
-        auto limelight_est_pos = LimelightHelpers::getBotPose2d_wpiBlue("limelight");
-        m_poseEstimator.AddVisionMeasurement(limelight_est_pos, frc::Timer::GetTimestamp());
+        auto limelight_pose_estimator = LimelightHelpers::getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+        m_poseEstimator.AddVisionMeasurement(limelight_pose_estimator.pose, frc::Timer::GetTimestamp());
         frc::SmartDashboard::PutBoolean("hastarget", true);
     } else {
         frc::SmartDashboard::PutBoolean("hastarget", false);
