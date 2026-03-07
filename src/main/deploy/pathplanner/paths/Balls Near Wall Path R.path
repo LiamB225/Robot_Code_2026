@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.9690222222222222,
-        "y": 4.697622222222221
+        "x": 12.938,
+        "y": 1.998
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.9690222222222222,
-        "y": 4.697622222222221
+        "x": 13.322261723686058,
+        "y": 2.0155813827598963
       },
       "isLocked": false,
-      "linkedName": "Path 1 End"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 6.0
+        "x": 15.822,
+        "y": 2.11
       },
       "prevControl": {
-        "x": 3.0,
-        "y": 6.0
+        "x": 16.38476059184524,
+        "y": 2.129307761827513
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Balls Near Wall R"
     }
   ],
   "rotationTargets": [],
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -72.58202920779708
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

@@ -9,6 +9,7 @@
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
   pathplanner::NamedCommands::registerCommand("shootcmd", m_shooter.get_shoot_command());
+  pathplanner::NamedCommands::registerCommand("intakecmd", m_intake.get_intake_command());
 
   autoChooser = pathplanner::AutoBuilder::buildAutoChooser();
   frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
