@@ -18,6 +18,7 @@ class Shooter : public frc2::SubsystemBase {
   Shooter();
 
   frc2::CommandPtr get_shoot_command();
+  frc2::CommandPtr get_reverse_command();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.

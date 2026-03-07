@@ -77,7 +77,7 @@ void Drive::Periodic() {
             est_position_roll_rate);
     }
 
-    if (LimelightHelpers::getTV("limelight")) {
+    if (LimelightHelpers::getTV("limelight") && frc::Timer::GetMatchTime() < 155_s) {
         auto limelight_pose_estimator = LimelightHelpers::getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
         m_poseEstimator.AddVisionMeasurement(limelight_pose_estimator.pose, frc::Timer::GetTimestamp());
         frc::SmartDashboard::PutBoolean("hastarget", true);

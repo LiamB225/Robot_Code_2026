@@ -29,6 +29,7 @@ void RobotContainer::ConfigureBindings() {
   m_driverController.Y().WhileTrue(m_shooter.get_shoot_command());
   m_driverController.RightTrigger().ToggleOnTrue(m_intake.get_intake_command());
   m_driverController.LeftTrigger().WhileTrue(m_intake.get_outake_command());
+  m_driverController.X().WhileTrue(m_shooter.get_reverse_command());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

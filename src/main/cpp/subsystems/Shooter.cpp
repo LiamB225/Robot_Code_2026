@@ -41,3 +41,14 @@ frc2::CommandPtr Shooter::get_shoot_command() {
     //     }
     // );
 }
+
+frc2::CommandPtr Shooter::get_reverse_command() {
+    return this->StartEnd( 
+        [this]() {
+            lowerMotor.Set(-0.1);
+        },
+        [this]() {
+            lowerMotor.Set(0.0);
+        }
+    );
+}
