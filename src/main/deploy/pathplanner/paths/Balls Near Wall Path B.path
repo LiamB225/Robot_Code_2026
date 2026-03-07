@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.121711723903802,
-        "y": 6.1042955137112305
+        "x": 3.1777476180946906,
+        "y": 5.861491190634972
       },
       "isLocked": false,
       "linkedName": null
@@ -20,15 +20,24 @@
         "y": 5.96
       },
       "prevControl": {
-        "x": 1.6743586484866326,
-        "y": 5.980013386388955
+        "x": 0.8892993483428828,
+        "y": 6.142089355145499
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Balls Near Wall B"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.39653543307086775,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 0.6560629921259851,
+      "rotationDegrees": 180.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -48,7 +57,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
