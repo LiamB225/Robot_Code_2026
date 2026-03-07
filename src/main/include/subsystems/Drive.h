@@ -143,4 +143,6 @@ class Drive : public frc2::SubsystemBase {
   //Field Variable
   frc::Field2d m_field;
 
+  bool seedLimelight = true;
+
 };
