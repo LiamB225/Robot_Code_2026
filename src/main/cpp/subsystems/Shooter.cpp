@@ -12,11 +12,11 @@ void Shooter::Periodic() {}
 frc2::CommandPtr Shooter::get_shoot_command() {
     return frc2::cmd::Sequence(
         this->RunOnce( [this]() {
-            shooterMotor.Set(0.60);
+            shooterMotor.Set(0.6);
         }),
         frc2::cmd::Wait(0.5_s),
         this->RunOnce( [this]() {
-            upperMotor.Set(0.50);
+            upperMotor.Set(0.5);
             lowerMotor.Set(0.3);
         }),
         frc2::cmd::Idle()
@@ -46,9 +46,13 @@ frc2::CommandPtr Shooter::get_reverse_command() {
     return this->StartEnd( 
         [this]() {
             lowerMotor.Set(-0.1);
+            shooterMotor.Set(0.6);
+            upperMotor.Set(0.5);
         },
         [this]() {
             lowerMotor.Set(0.0);
+            shooterMotor.Set(0.0);
+            upperMotor.Set(0.0);
         }
     );
 }
