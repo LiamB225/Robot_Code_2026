@@ -7,6 +7,8 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/Commands.h>
+#include <frc/controller/PIDController.h>
+#include <frc/controller/SimpleMotorFeedforward.h>
 
 #include <rev/SparkMax.h>
 #include <ctre/phoenix6/CANcoder.hpp>
@@ -29,6 +31,9 @@ class Shooter : public frc2::SubsystemBase {
   rev::spark::SparkMax shooterMotor{OperatorConstants::shooterMotorID, rev::spark::SparkMax::MotorType::kBrushless};
   rev::spark::SparkMax upperMotor{OperatorConstants::upperMotorID, rev::spark::SparkMax::MotorType::kBrushless};
   rev::spark::SparkMax lowerMotor{OperatorConstants::lowerMotorID, rev::spark::SparkMax::MotorType::kBrushless};
+
+  // frc::PIDController shooterPID{0.0, 0.0, 0.0};
+  // frc::SimpleMotorFeedforward<units::radians> shooterFF{0.0_V, 0.0_V / 1_rad_per_s};
   
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
