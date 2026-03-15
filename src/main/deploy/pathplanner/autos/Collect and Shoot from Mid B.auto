@@ -1,0 +1,63 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Go to Mid B"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakecmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Intake thru Mid B"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakecmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot from Mid B"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootcmd"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
