@@ -49,55 +49,55 @@ void Drive::Periodic() {
       (units::radian_t)(brRotEncoder.GetAbsolutePosition().GetValueAsDouble() * M_PI * 2)}
     });
 
-    // double est_position_yaw = gyro.GetAngle(gyro.GetPitchAxis()).value();
-    // double est_position_yaw_rate = gyro.GetRate(gyro.GetPitchAxis()).value();
-    // double est_position_pitch = gyro.GetAngle(gyro.GetRollAxis()).value();
-    // double est_position_pitch_rate = gyro.GetRate(gyro.GetRollAxis()).value();
-    // double est_position_roll = gyro.GetAngle(gyro.GetYawAxis()).value();
-    // double est_position_roll_rate = gyro.GetRate(gyro.GetYawAxis()).value();
+    double est_position_yaw = gyro.GetAngle(gyro.GetPitchAxis()).value();
+    double est_position_yaw_rate = gyro.GetRate(gyro.GetPitchAxis()).value();
+    double est_position_pitch = gyro.GetAngle(gyro.GetRollAxis()).value();
+    double est_position_pitch_rate = gyro.GetRate(gyro.GetRollAxis()).value();
+    double est_position_roll = gyro.GetAngle(gyro.GetYawAxis()).value();
+    double est_position_roll_rate = gyro.GetRate(gyro.GetYawAxis()).value();
 
-    // if(frc::DriverStation::IsEnabled()) {
-    //     LimelightHelpers::SetIMUAssistAlpha("limelight", 0.001);
-    //     LimelightHelpers::SetIMUMode("limelight", 2);
-    //     // LimelightHelpers::SetRobotOrientation("limelight", 
-    //     //     est_position_yaw, 
-    //     //     est_position_yaw_rate, 
-    //     //     est_position_pitch, 
-    //     //     est_position_pitch_rate, 
-    //     //     est_position_roll,
-    //     //     est_position_roll_rate);
-    // } else {
-    //     LimelightHelpers::SetIMUMode("limelight", 1);
-    //     LimelightHelpers::SetRobotOrientation("limelight", 
-    //         est_position_yaw, 
-    //         est_position_yaw_rate, 
-    //         est_position_pitch, 
-    //         est_position_pitch_rate, 
-    //         est_position_roll,
-    //         est_position_roll_rate);
-    // }
-
-    if(frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed && seedLimelight) {
-        // LimelightHelpers::SetIMUMode("limelight", 1);
-        m_poseEstimator.ResetRotation(frc::Rotation2d{180_deg});
-        seedLimelight = false;
-        // LimelightHelpers::SetRobotOrientation("limelight", m_poseEstimator.GetEstimatedPosition().Rotation().Degrees().value(), 0.0, 0.0, 0.0, 0.0, 0.0);
-        // units::degree_t seedvalue = LimelightHelpers::getBotPoseEstimate_wpiBlue_MegaTag2("limelight").pose.Rotation().Degrees();
-        // if(seedvalue > 170_deg || seedvalue < -170_deg) {
-        //     // LimelightHelpers::SetIMUMode("limelight", 2);
-        //     seedLimelight = false;
-        // }
+    if(frc::DriverStation::IsEnabled()) {
+        LimelightHelpers::SetIMUAssistAlpha("limelight", 0.001);
+        LimelightHelpers::SetIMUMode("limelight", 2);
+        LimelightHelpers::SetRobotOrientation("limelight", 
+            est_position_yaw, 
+            est_position_yaw_rate, 
+            est_position_pitch, 
+            est_position_pitch_rate, 
+            est_position_roll,
+            est_position_roll_rate);
+    } else {
+        LimelightHelpers::SetIMUMode("limelight", 1);
+        LimelightHelpers::SetRobotOrientation("limelight", 
+            est_position_yaw, 
+            est_position_yaw_rate, 
+            est_position_pitch, 
+            est_position_pitch_rate, 
+            est_position_roll,
+            est_position_roll_rate);
     }
 
-    // LimelightHelpers::SetRobotOrientation("limelight", m_poseEstimator.GetEstimatedPosition().Rotation().Degrees().value(), 0, 0, 0, 0, 0);
-    // if (LimelightHelpers::getTV("limelight") && frc::Timer::GetMatchTime() < 155_s) {
-    //     LimelightHelpers::SetIMUMode("limelight", 0);
-    //     auto limelight_pose_estimator = LimelightHelpers::getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-    //     m_poseEstimator.AddVisionMeasurement(limelight_pose_estimator.pose, frc::Timer::GetTimestamp());
-    //     frc::SmartDashboard::PutBoolean("hastarget", true);
-    // } else {
-    //     frc::SmartDashboard::PutBoolean("hastarget", false);
-    // }
+    if(frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed && seedLimelight) {
+        LimelightHelpers::SetIMUMode("limelight", 1);
+        m_poseEstimator.ResetRotation(frc::Rotation2d{180_deg});
+        seedLimelight = false;
+        LimelightHelpers::SetRobotOrientation("limelight", m_poseEstimator.GetEstimatedPosition().Rotation().Degrees().value(), 0.0, 0.0, 0.0, 0.0, 0.0);
+        units::degree_t seedvalue = LimelightHelpers::getBotPoseEstimate_wpiBlue_MegaTag2("limelight").pose.Rotation().Degrees();
+        if(seedvalue > 170_deg || seedvalue < -170_deg) {
+            // LimelightHelpers::SetIMUMode("limelight", 2);
+            seedLimelight = false;
+        }
+    }
+
+    LimelightHelpers::SetRobotOrientation("limelight", m_poseEstimator.GetEstimatedPosition().Rotation().Degrees().value(), 0, 0, 0, 0, 0);
+    if (LimelightHelpers::getTV("limelight") && frc::Timer::GetMatchTime() < 155_s) {
+        LimelightHelpers::SetIMUMode("limelight", 0);
+        auto limelight_pose_estimator = LimelightHelpers::getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+        m_poseEstimator.AddVisionMeasurement(limelight_pose_estimator.pose, frc::Timer::GetTimestamp());
+        frc::SmartDashboard::PutBoolean("hastarget", true);
+    } else {
+        frc::SmartDashboard::PutBoolean("hastarget", false);
+    }
 
     m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
     frc::SmartDashboard::PutNumber("X", m_poseEstimator.GetEstimatedPosition().X().value());
